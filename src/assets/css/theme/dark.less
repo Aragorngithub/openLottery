@@ -1,0 +1,143 @@
+/*
+ * @FilePath: \openLottery\src\assets\css\theme\dark.less
+ * @Description: 夜间主题
+ */
+.theme-dark {
+  background-color: #10151d;
+  .darkgradient(@start: 180deg) {
+    background: linear-gradient(@start, #d1bef7 0%, #a87ffb 100%);
+  }
+  header {
+    background-color: #16202de6;
+    border-bottom: 1px solid #2e3c51;
+    .el-input__wrapper, .el-select__wrapper {
+      background-color: #10151d;
+      border: 1px solid transparent;
+      &:has(input:focus) {
+      border: 1px solid #a87ffb;
+      }
+      input, span {
+        color: #bfc7d2;
+      }
+    }
+    .el-select {
+      .el-select__suffix {
+        background-color: #16202de6;
+        i {
+          color: #a87ffb;
+        }
+      }
+    }
+    .el-popover__reference {
+      background-color: #10151d;
+      color: #a87ffb;
+    }
+  }
+  .el-carousel .is-active button { // 轮播图的按钮
+    background: #a87ffb;
+  }
+  nav, .country-selector {
+    background-color: #16202de6;
+    color: #bfc7d2;
+    b.active, .active-icon, .nav-item--active::after, .nav-item:hover::after {
+      .darkgradient(90deg);
+    }
+    li.active {
+      .darkgradient(90deg);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    li:last-child i {
+      background-color: #10151d;
+    }
+  }
+  section {
+    color: #bfc7d2;
+    .animal-name, .draw-time {
+      color: #fff
+    }
+    .nextdraw-card {
+      .darkgradient();
+      * {
+        color: #10151D !important;
+      }
+      .nextdraw__text h1 {
+        color: #f8cd77 !important;
+      }
+    }
+  }
+  #scroll-to-top {
+    .darkgradient();
+    i {
+      color: #10151D;
+    }
+  }
+  .card {
+    color: #bfc7d2 !important;
+    border-color: #2e3c51 !important;
+    background-color: #16202de6 !important;
+    .lot-name {
+      color: #a87ffb;
+    }
+    button {
+      position: relative;
+      border: 1px solid #2e3c51;
+      transition: border-color .3s ease;
+      color: #bfc7d2;
+      overflow: hidden;
+      &:hover {
+        border-color: #a87ffb;
+        &:before {
+          content: '';
+          inset: 0;
+          opacity: .2;
+          position: absolute;
+          background-color: #a87ffb;
+        }
+      }
+    }
+  }
+  .el-select__popper {
+    background-color: #161f2c !important;
+    border: none;
+    .el-select-dropdown__item {
+    background-color: #161f2c !important;
+    &:hover {
+        color: #a87ffb;
+      }
+      &.is-selected {
+        color: #a87ffb;
+      }
+    }
+  }
+  .el-popover {
+    background: linear-gradient(180deg, #423855 0%, #03080ee6 100%) !important;
+    border-color: #2e3c51 !important;
+    color: #bfc7d2 !important;
+    .el-collapse, .el-collapse-item__header, .el-collapse-item__wrap, .el-collapse-item__content {
+      border-color: #2e3c51;
+      color: #bfc7d2;
+    }
+    .theme-switcher {
+      border-color: #bfc7d2;
+      li:nth-child(2) {
+        border-color: #bfc7d2;
+      }
+    }
+    .lang-switcher .is-active {
+      color: #a87ffb;
+    }
+    ul li {
+      &:hover {
+        color: #a87ffb;
+      }
+      &.active {
+        color: #10151d;;
+        .darkgradient();
+      }
+    }
+  }
+  .el-skeleton .el-skeleton__item {
+    background-image: linear-gradient(90deg, #16202de6 25%, #261b3e 37%, #16202de6 63%);
+  }
+}

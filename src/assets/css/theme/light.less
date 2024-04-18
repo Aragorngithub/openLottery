@@ -1,0 +1,118 @@
+/*
+ * @FilePath: \openLottery\src\assets\css\theme\light.less
+ * @Description: 白天主题
+ */
+.theme-light {
+  background-color: #F2F2F2;
+  --el-color-primary: #B25000;
+  .lightgradient() {
+    background: linear-gradient( 270deg, #E9CE68 0%, #E4AE41 100%);
+  }
+  .light-textgradient() {
+    background: linear-gradient(90deg, #FA931A 0%, #FF6A00 100%);
+  }
+  header {
+    background: linear-gradient( 270deg, #FDDBA0 100%, #FFAC4F 100%);
+    .el-input__wrapper, .el-select__wrapper {
+      background: rgba(255,255,255,0.5);
+      input, span {
+        color: #333333;
+      }
+    }
+    .el-select {
+      .el-select__suffix {
+        background-color: #fff;
+        i {
+          color: #E9B139;
+        }
+      }
+    }
+    .el-popover__reference {
+      background-color: #fff;
+      color: #E9B139;
+    }
+  }
+  .el-carousel .is-active button {
+    background: #f8cd77;
+  }
+  nav, .country-selector {
+    background: rgba(255,255,255,0.9);
+    color: #939393;
+    box-shadow: inset -1px 0px 0px 0px #FFFFFF, 2px 0px 10px 0px rgba(0,0,0,0.1);
+    b.active, .active-icon, .nav-item--active::after, .nav-item:hover::after {
+      .lightgradient();
+    }
+    .nav-item--active::after, .nav-item:hover::after {
+      height: 4px !important;
+    }
+
+    b.active {
+      .light-textgradient();
+    }
+    li.active {
+      .light-textgradient();
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    li:last-child i {
+      color: #fff;
+      background-color: #AEAEAE;
+    }
+  }
+  section {
+    color: #2E2E2E;
+    .nextdraw-card {
+      .lightgradient();
+    }
+    .world-lottery ul li:hover {
+      color: #e7830a;
+    }
+  }
+  footer {
+    background-color: #B1B1B1;
+    .toppart {
+      color: #000 !important;
+    }
+    #scroll-to-top {
+      .lightgradient();
+      i {
+        color: #6b3c28;
+      }
+    }
+  }
+  .card {
+    background-color: #fff;
+    .lot-name {
+      color: #B25000;
+    }
+    button {
+      position: relative;
+      border: 1px solid #939393;
+      transition: border-color .3s ease;
+      overflow: hidden;
+      &:hover {
+        border-color: #B25000;
+        &:before {
+          content: '';
+          inset: 0;
+          opacity: .2;
+          position: absolute;
+          background-color: #B25000;
+        }
+      }
+    }
+  }
+  .el-popover {
+    ul li {
+      &:hover {
+        color: #B25000;
+      }
+      &.active {
+        .lightgradient();
+      }
+    }
+    .lang-switcher .is-active {
+      color: #f8cd77;
+    }
+  }
+}

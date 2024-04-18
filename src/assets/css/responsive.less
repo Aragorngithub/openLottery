@@ -1,0 +1,300 @@
+/*
+ * @FilePath: \openLottery\src\assets\css\responsive.less
+ * @Description: 多端适应的样式列表
+ */
+
+@media (min-width: 1281px) {
+  // PC
+  .page-views {
+    nav { // 首页导航栏
+      z-index: 2;
+      position: sticky;
+      transform: translateY(-10px);
+      border-radius: 16px;
+    }
+    section { // 首页主体
+      gap: 40px !important;
+      .lot-result__skeleton .is-first, .jackpot__skeleton .is-first {
+        height: 30px;
+      }
+      .rightsite-cardbox--main {
+        gap: 20px !important;
+      }
+      .lotimg-behind_text p {
+        line-height: 42px !important;
+      }
+      .world-lottery img {
+        width: 120px !important;
+      }
+    }
+  } 
+}
+@media (min-width: 851px) and (max-width: 1280px) {
+  .animal-name {
+    font-size: 15px;
+  }
+}
+@media (min-width: 851px) {
+  .el-input .el-input__wrapper {
+    width: 290px;
+  }
+  .page-views section { // 首页主体
+    .card-toppart {
+      p {
+        line-height: 26px;
+      }
+    }
+    .text-bigsize {
+      font-size: 22px;
+    }
+    .card-middle--results .number-ball {
+      width: 40px;
+      height: 40px;
+      line-height: 30px;
+      font-size: 20px;
+    }
+    .history-bottom__text, .nextdraw__text h1 {
+      font-size: 30px;
+    }
+  } 
+}
+
+@media (max-width: 850px) {
+  .animal-name {
+    font-size: 1.00046rem;
+  }
+}
+
+@media (max-width: 685px) {
+  .page-views section .card {
+    max-width: 100% !important;
+    flex-basis: 100% !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 850px){
+  // 最小宽度 480px 和 最大宽度 850px 之间
+  .page-views section {  // 首页主体
+    .card-toppart {
+      p {
+        font-size: 13px;
+        line-height: 22px;
+      }
+    }
+    .text-bigsize {
+      font-size: 16px;
+    }
+    .lot-image {
+      width: 80px;
+    }
+    .number-ball {
+      width: 34px;
+      height: 34px;
+      line-height: 27px;
+      font-size: 17px;
+    }
+  } 
+}
+
+@media (min-width: 481px) {
+  // 屏幕大于 481px （平板，PC等）
+  .card-middle--results {
+    justify-content: space-evenly;
+  }
+
+  .page-views { // 首页主体
+    nav {
+      span {
+        font-size: 16px;
+      }
+    }
+    .card {
+      padding: 30px 20px;
+    }
+    .lot-result__skeleton {
+      .el-skeleton__item {
+        width: 49.5%;
+        height: 330px;
+      }
+      .is-first{
+        width: 12%;
+        height: 30px;
+      }
+    }
+    .world-lottery .card-content__percontent {
+      width: 25%;
+    }
+    .jackpot .card {
+      &-rightsite {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      &-bottompart {
+        width: calc(100% / 3);
+        &--money {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  footer .toppart { // 页脚
+    gap: 76px;
+
+    &--lefttop {
+      width: 30%;
+      display: flex;
+
+      &-first,
+      &-seconrd {
+        width: 50%;
+      }
+    }
+
+    &--rightbottom {
+      width: 70%;
+    }
+  }
+}
+
+@media (max-width: 480px) { // 屏幕小于480px (移动端)
+  body {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-text-size-adjust: 100% !important;
+    -moz-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  header { // 页眉
+    padding: 0 10px;
+    .header--leftsite {
+      img {
+        width: 6.83646rem;;
+      }
+    }
+    .header--rightsite {
+      gap: 1.42857rem;;
+      .el-input {
+        // width: 100%;
+        transition: width 1s ease-in-out;
+        .el-input__suffix {
+          width: 2.9166rem;
+        }
+        .el-input__wrapper {
+          padding: 0;
+        }
+      }
+      .minimize {
+        width: 2.918rem;
+      }
+    }
+  }
+  .page-views { // 首页主体
+    nav {
+      img {
+        display: none;
+      }
+      span {
+        font-size: 1.00046rem;
+      }
+    }
+    .lot-result__skeleton {
+      .el-skeleton__item {
+        width: 100%;
+        height: 16.67429rem;
+      }
+      .is-first {
+        width: 7.16994rem;
+        height: 2.08429rem;
+      }
+    }
+    .lot-popular__skeleton .el-skeleton__item:nth-child(even) {
+      height: 14.08977rem;
+    }
+    .card {
+      padding: 10px;
+      &-toppart {
+        width: 100%;
+        p {
+          font-size: 0.83371rem;
+          line-height: 1.33394rem;
+        }
+        .lotimg-behind_text {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+      .text-bigsize {
+        font-size: 1.08383rem;
+      }
+      .lot-image {
+        width: 5.00229rem;
+      }
+      &-middle--results {
+        width: 100%;
+        justify-content: space-around;
+        .number-ball {
+          width: 2.3344rem;
+          height: 2.3344rem;
+          line-height: 1.7508rem;
+          font-size: 1.08383rem;
+          border-width: 0.25011rem !important;
+          font-weight: 600;
+        }
+      }
+      &-bottompart {
+        padding-top: 1.50069rem;
+      }
+    }
+    .history .card { // 单个彩种开奖记录
+      flex-direction: column;
+      &-middle--results {
+        margin: 12px 0 25px;
+      }
+      .history-bottom__text {
+        width: 100%;
+      }
+    }
+    .world-lottery {
+      .card-content__percontent {
+        width: 33.333%;
+      }
+      .card-content-image_name {
+        width: 50%;
+      }
+    }
+    .jackpot .card {
+      &-rightsite {
+        display: unset;
+        .draw-time {
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+  footer .toppart { // 页脚
+    flex-direction: column;
+    gap: 1.00046rem;
+    &--lefttop {
+      width: 100%;
+      &-first,
+      &-seconrd {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    &--rightbottom {
+      width: 100%;
+    }
+  }
+  .el-popover {
+    width: 14.64286rem !important;
+  }
+}

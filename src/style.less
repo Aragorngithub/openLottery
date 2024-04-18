@@ -1,0 +1,153 @@
+@import './assets/css/responsive';
+@import './assets/css/theme/dark';
+@import './assets/css/theme/light';
+@import './assets/css/theme/default';
+
+:root {
+  overflow: visible;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b29569;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2E2E2E;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  line-height: 1.3;
+  overflow-x: hidden;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+.rightsite-container {
+  width: 100%;
+}
+
+.el-select-dropdown {
+  // 下拉框弹窗
+  border: none !important;
+  border-radius: 0 0 20px 20px !important;
+
+  .el-scrollbar {
+    margin-top: -1px;
+    border-radius: 0 0 16px 16px;
+  }
+
+  .el-scrollbar__wrap {
+    overflow: hidden;
+    max-height: unset;
+  }
+}
+
+.el-popover {
+  // Popover 弹出框
+  margin-top: -12px;
+  padding: 0 !important;
+
+  ul li {
+    cursor: pointer;
+  }
+}
+
+.card {
+  color: #303133;
+  overflow: hidden;
+  padding: 10px 0;
+  border-radius: 16px;
+  border: 1px solid #EBEEF5;
+  box-shadow: 0 0.14286rem 0.85714rem 0 rgba(0, 0, 0, .1);
+
+  &-toppart {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .lot-name,
+    .draw-time {
+      padding-left: 12px;
+    }
+  }
+
+  &-middle--results {
+    // 开奖求
+    display: flex;
+    position: relative;
+
+    .number-ball {
+      border-radius: 50%;
+      text-align: center;
+      border: 5px solid;
+      color: #252525;
+      background-color: #fff;
+      border-color: #7bd732;
+
+      &:first-child,
+      &:last-child {
+        border-color: #2eb8ee;
+      }
+
+      &:last-child {
+        margin-left: 20px;
+      }
+
+      .animal-name {
+        display: inline-block;
+        margin-top: 6px;
+      }
+    }
+
+    .power-play {
+      bottom: -50px;
+      position: absolute;
+    }
+  }
+}
+
+.history,
+.jackpot,
+.world-lottery {
+  .card {
+    margin-bottom: 12px;
+  }
+}
+
+.el-collapse-item__header,
+.el-collapse-item__wrap {
+  background-color: transparent;
+}
+
+.skeleton {
+  height: 85vh;
+  overflow: hidden;
+  transition: height .4s ease-out;
+
+  &.is-hidden {
+    height: 0;
+  }
+}
+
+.el-empty {
+  margin: auto;
+}
+
+.el-icon {
+  color: #939393;
+}

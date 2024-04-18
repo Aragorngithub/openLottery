@@ -1,0 +1,133 @@
+/*
+ * @FilePath: \openLottery\src\assets\css\theme\default.less
+ * @Description: 默认主题
+ */
+.theme-default {
+  background-color: #1b1b1b;
+  .jianbian(@start: 180deg) {
+    background: linear-gradient(@start, #fef3b1 0%, #e7830a 100%);
+  }
+  --el-text-color-regular: #939393;
+  --el-color-primary: #f8cd77;
+  header {
+    background: #2E2E2E url('../../../assets/images/header/logo_background.png') no-repeat;
+    .el-input__wrapper, .el-select__wrapper {
+      color: #939393;
+      background-color: #252525;
+    }
+    .el-select {
+      .el-select__suffix {
+        background-color: #3b3b3b;
+        i {
+          color: #f8cd77;
+        }
+      }
+    }
+    .el-popover__reference {
+      background-color: #252525;
+      color: #f8cd77;
+    }
+  }
+  
+  .el-carousel .is-active button { // 轮播图的按钮
+    background: #f8cd77;
+  }
+  nav, .country-selector {
+    background-color: #252525;
+    color: #939393;
+    b.active, .active-icon, .nav-item--active::after, .nav-item:hover::after {
+      .jianbian(90deg);
+    }
+    li.active {
+      .jianbian(90deg);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    li:last-child i {
+      background-color: #3b3b3b;
+    }
+  }
+  section { // 彩票相关数据的卡片样式
+    color: #939393;
+    .animal-name, .draw-time {
+      color: #fff
+    }
+    .nextdraw-card {
+      .jianbian();
+      * {
+        color: #6B3C28 !important;
+      }
+    }
+  }
+  footer {
+    background: url("../../images/footer/background.png") 100% / cover no-repeat;
+    #scroll-to-top {
+      .jianbian();
+      i {
+        color: #6b3c28;
+      }
+    }
+  }
+
+  .card {
+    color: #939393;
+    border-color: #333232;
+    background-color: #252525;
+    .lot-name {
+      color: #f8cd77;
+    }
+    button {
+      color: rgba(255, 255, 255, .8);
+      border: 1px solid #444548;
+      &:hover {
+        color: #6b3c28;
+        .jianbian();
+      }
+    }
+  }
+  .el-select__popper {
+    background-color: #2E2E2E !important;
+    border: none;
+    .el-select-dropdown__item {
+      background-color: #2E2E2E !important;
+      &:hover {
+        color: #f8cd77;
+      }
+      &.is-selected {
+        color: #250C03;
+        background: linear-gradient(180deg, #FEF3B1 0%, #e7830a 100%);
+      }
+    }
+  }
+  .el-popover {
+    background: linear-gradient(180deg, #433b31 0%, #1c1c1c 100%) !important;
+    border-color: #494540 !important;
+    color: #939393 !important;
+    .el-collapse, .el-collapse-item__header, .el-collapse-item__wrap, .el-collapse-item__content {
+      border-color: #333232;
+      color: #939393;
+    }
+    .theme-switcher {
+      border-color: #939393;
+      li:nth-child(2) {
+        border-color: #939393;
+      }
+    }
+    .lang-switcher .is-active {
+      color: #f8cd77;
+    }
+    ul li {
+      &:hover {
+        color: #f8cd77;
+      }
+      &.active {
+        color: #000;
+        .jianbian();
+      }
+    }
+  }
+  .el-skeleton .el-skeleton__item {
+    background-image: linear-gradient(90deg, rgb(31, 34, 35) 25%, 
+    rgb(38, 41, 43) 37%, rgb(31, 34, 35) 63%);
+  }
+}
