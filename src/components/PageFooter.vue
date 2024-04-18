@@ -8,13 +8,16 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { DArrowLeft } from '@element-plus/icons-vue';
 
 const isShowing = ref(false);
+
 onMounted(() => {
   window.addEventListener('scroll', watchScrollbarPosition);
 });
+
 /** @description: 位置离顶部大于400则显示重置滚动位置的按钮 */
 const watchScrollbarPosition = () => {
   isShowing.value = document.documentElement.scrollTop > 400;
 };
+
 onUnmounted(() => {
   window.removeEventListener('scroll', watchScrollbarPosition);
 });
@@ -46,7 +49,7 @@ onUnmounted(() => {
             <img
               v-for="num in 7"
               :key="num"
-              v-lazyload="`src/assets/images/footer/brand_logo${num}.png`"
+              v-lazyload="`images/footer/brand_logo${num}.png`"
               alt="Brand icon"
             />
           </div>
@@ -62,7 +65,7 @@ onUnmounted(() => {
         <img
           v-for="num in 10"
           :key="num"
-          v-lazyload="`src/assets/images/footer/brand_name${num}.png`"
+          v-lazyload="`images/footer/brand_name${num}.png`"
           alt="Brand logo"
         />
       </div>

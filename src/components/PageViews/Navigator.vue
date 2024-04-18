@@ -43,6 +43,7 @@ const changeLotteryType = (lotCode) => {
     query: { lotCode },
   });
 };
+
 /**
  * @description: 高亮导航栏的点击项
  * @param {*} page 菜单项的值
@@ -84,7 +85,7 @@ watch(
         <template #reference>
           <span class="nav-item--content">
             <img
-              :src="`src/assets/images/${option}.png`"
+              :src="`images/${option}.png`"
               :class="{ 'active-icon': isActiveTab == option }"
               alt="Navigation icon"
             />
@@ -107,7 +108,7 @@ watch(
         v-on:[publicState.deviceEvent]="changeTab(option)"
       >
         <img
-          :src="`src/assets/images/${option}.png`"
+          :src="`images/${option}.png`"
           :class="{ 'active-icon': isActiveTab == option }"
           alt="Navigation icon"
         />

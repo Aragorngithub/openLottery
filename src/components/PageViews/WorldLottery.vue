@@ -1,6 +1,6 @@
 <!--
  * @FilePath: \openLottery\src\components\PageViews\WorldLottery.vue
- * @Description: 世界彩票卡片
+ * @Description: 世界彩票
 -->
 <script setup>
 import { scrollToTop } from '@/utils';
@@ -9,17 +9,16 @@ import { getWorldLotteries } from '@/http';
 import { ref, computed, getCurrentInstance } from 'vue';
 
 const router = useRouter();
+const lotteryList = ref([]); // 各个区域的彩票列表
+const countriesGroup = ref([]); // 各个州的国家分组
 const internalInstance = getCurrentInstance();
 const $t = internalInstance.appContext.config.globalProperties.$t;
 const $message = internalInstance.appContext.config.globalProperties.$message;
-const lotteryList = ref([]); // 各个区域的彩票列表
-const countriesGroup = ref([]); // 各个州的国家分组
-/** @description: 初始化数据 */
-getWorldLotteries().then((res) => {
-  if (res) {
-    lotteryList.value = res.lotteryList;
-    countriesGroup.value = res.worldArea;
-  };
+const props = defineProps({
+  scrollPosition: {
+    type: Number,
+    default: 0,
+  },
 });
 
 /**
@@ -35,6 +34,14 @@ const defineCountriesList = computed(() => {
   });
   return countryList;
 });
+
+/** @description: 初始化相关数据 */
+getWorldLotteries().then((res) => {
+  if (res) {
+    lotteryList.value = res.lotteryList;
+    countriesGroup.value = res.worldArea;
+  };
+});
 /**
  * @description: 定义元素的引入名称（去除下划线）
  * @param {String} name 区域名称
@@ -44,7 +51,7 @@ const formatClassName = (name) => {
   return name.replaceAll(' ', '_');
 };
 /**
- * @description: 视图平滑地滚动到彩种dlt
+ * @description: 视图平滑地滚动到彩种
  * @param {*} className 元素的引入名
  */    
 const scrollIntoLottery = (className) => {
@@ -67,7 +74,7 @@ const goLotteryHistory = (lotCode) => {
     params: { page: 'popular-lottery' },
     query: { lotCode },
   });
-  scrollToTop(); //todo: 传入轮播图高度
+  scrollToTop(props.scrollPosition);
 }
 </script>
 
@@ -103,7 +110,7 @@ const goLotteryHistory = (lotCode) => {
           <div v-for="lottery in country.lotteryList" :key="lottery.code"
             class="card-content__percontent card-content-image_name"
             v-on:[publicState.deviceEvent]="goLotteryHistory(lottery.code)">
-            <img class="lot-image" :src="`src/assets/images/${lottery.code}.png`" :alt="lottery.code" />
+            <img class="lot-image" :src="`images/${lottery.code}.png`" :alt="lottery.code" />
             <span class="text-bigsize">
               {{ lottery.code == "YNLHC" ? $t("YNLHC") : lottery.name }}
             </span>

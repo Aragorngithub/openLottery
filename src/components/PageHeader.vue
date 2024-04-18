@@ -46,8 +46,9 @@ const locale = computed({
   },
   set(lang) {
     i18n.locale = lang;
-  },
+  }
 });
+
 /**
  * @description: 切换皮肤
  * @param {*} themeName 主题名称

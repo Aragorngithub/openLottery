@@ -5,22 +5,16 @@
 -->
 <script setup>
 import {
-  ref,
   shallowRef,
-  onUnmounted,
-  watch,
-  getCurrentInstance,
-  onMounted,
+  onMounted, onUnmounted,
+  ref, getCurrentInstance,
+  defineAsyncComponent, watch
 } from 'vue';
 import { emitter } from '@/utils';
 import { useRoute, useRouter } from 'vue-router';
 import { getLotteries, getOpenResult } from '@/http';
-import Lottery from '@/components/PageViews/Lottery.vue';
-import Jackpots from '@/components/PageViews/Jackpots.vue';
 import Navigator from '@/components/PageViews/Navigator.vue';
 import { useCommonDataStore, useLotNameListStore } from '@/store';
-import WorldLottery from '@/components/PageViews/WorldLottery.vue';
-import PopularLottery from '@/components/PageViews/PopularLottery.vue';
 import CountrySelector from '@/components/PageViews/CountrySelector.vue';
 
 let LOTTERYDATA = {}; // 备份的开奖结果
@@ -30,22 +24,22 @@ let previousPage = ''; // 记录前一页
 const route = useRoute();
 const router = useRouter();
 const carouselImg = ref();
-const component = shallowRef(Lottery);
+const loterryData = ref({}); // 开奖结果
+const component = shallowRef();
 const carouselHeight = ref(undefined);
 const activatingCountry = ref(undefined); // 当前选中的国家
-const loterryData = ref({}); // 开奖结果
+const internalInstance = getCurrentInstance();
 const { saveCommonData } = useCommonDataStore();
 const { saveLotName, clearLotNameList } = useLotNameListStore();
-const internalInstance = getCurrentInstance();
-const globalProperties = internalInstance.appContext.config.globalProperties;
 const $t = internalInstance.appContext.config.globalProperties.$t;
+const globalProperties = internalInstance.appContext.config.globalProperties;
 const $message = internalInstance.appContext.config.globalProperties.$message;
-const componentList = {
-  lottery: Lottery,
-  'popular-lottery': PopularLottery,
-  'world-lottery': WorldLottery,
-  jackpots: Jackpots,
-};
+const componentList = new Map([
+  ['popular-lottery', defineAsyncComponent(() => import('@/components/PageViews/PopularLottery.vue'))],
+  ['world-lottery', defineAsyncComponent(() => import('@/components/PageViews/WorldLottery.vue'))],
+  ['jackpots', defineAsyncComponent(() => import('@/components/PageViews/Jackpots.vue'))],
+  ['lottery', defineAsyncComponent(() => import('@/components/PageViews/Lottery.vue'))],
+]);
 
 /** @description: 请求彩票数据（国家，彩种等相关信息）*/
 getLotteries().then((res) => {
@@ -64,8 +58,7 @@ getLotteries().then((res) => {
             result && Object.assign(record, result);
             saveLotName(result.lotName);
             if (i === countries.length - 1 && index === data[country].length - 1) {
-              loterryData.value = data;
-              LOTTERYDATA = data;
+              loterryData.value = LOTTERYDATA = data;
             };
           });
       });
@@ -127,7 +120,7 @@ watch(
    * @param {*} page 从菜单跳转的组件名
    */
   ({ page }) => {
-    component.value = componentList[page];
+    component.value = componentList.get(page);
     if (
       (page == 'popular-lottery' && !activatingCountry.value) ||
       previousPage == page
@@ -142,8 +135,8 @@ watch(
               throw new Error(); // 已找到对应的国家，跳出此双层循环
             }
           });
-        }
-      } catch (e) {}
+        };
+      } catch (e) {};
     } else if (isHighlightCountry) {
       // 离开流行彩票时取消高亮
       activatingCountry.value = isHighlightCountry = undefined;
@@ -164,15 +157,15 @@ onUnmounted(() => {
   <main class="page-views">
     <!-- 轮播图 -->
     <el-carousel
-      :interval="6000"
       ref="carouselCpn"
-      :height="`${carouselHeight}px`"
       trigger="click"
+      :interval="6000"
+      :height="`${carouselHeight}px`"
     >
       <el-carouselItem v-for="num in 5" :key="num">
         <img
           ref="carouselImg"
-          :src="`src/assets/images/banner${num}.png`"
+          :src="`images/banner${num}.png`"
           @load="setCarouselHeight"
           alt="Carousel picture"
         />

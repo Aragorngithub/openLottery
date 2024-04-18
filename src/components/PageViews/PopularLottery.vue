@@ -21,6 +21,7 @@ onMounted(() => {
     updateCountdown.value = !updateCountdown.value;
   }, 1000);
 });
+
 /**
  * @description: 请求开奖信息，下期开奖信息
  * @param {*} lotCode 彩种编号
@@ -37,10 +38,13 @@ const initData = (lotCode) => {
 const toTurnBack = () => {
   router.go(-1);
 };
+
 watchEffect(() => {
   /** @description: 流行彩票切换彩种时进行相对应地展示开奖数据 */
   route.query.lotCode && initData(route.query.lotCode);
+  !route.query.lotCode && route.params.page === "popular-lottery" && router.push('/');
 });
+
 onUnmounted(() => {
   clearInterval(timer); // 清除倒计时
   timer = null;
@@ -70,7 +74,7 @@ onUnmounted(() => {
       <div class="card-toppart">
         <img
           class="lot-image"
-          :src="`src/assets/images/${latestResult.lotCode}.png`"
+          :src="`images/${latestResult.lotCode}.png`"
           alt="Lottery's logo"
         />
         <span class="lotimg-behind_text">
@@ -113,7 +117,7 @@ onUnmounted(() => {
       <div class="card-toppart">
         <img
           class="lot-image"
-          :src="`src/assets/images/${nextDrawInfo.lotCode}.png`"
+          :src="`images/${nextDrawInfo.lotCode}.png`"
           alt="Lottery's logo"
         />
         <span class="lotimg-behind_text">
@@ -157,7 +161,7 @@ onUnmounted(() => {
         <div class="card-toppart">
           <img
             class="lot-image"
-            :src="`src/assets/images/${record.lotCode}.png`"
+            :src="`images/${record.lotCode}.png`"
             alt="Lottery's logo"
           />
           <span class="lotimg-behind_text">

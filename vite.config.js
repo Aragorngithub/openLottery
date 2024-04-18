@@ -1,11 +1,9 @@
-import vue from '@vitejs/plugin-vue'
-import autoprefixer from 'autoprefixer'
-import pxtorem from 'postcss-pxtorem'
-import { defineConfig } from 'vite'
-import { resolve } from 'path'
-// dlt如果编辑器提示 path 模块找不到，则可以安装一下 @types/node -> npm i @types/node -D
+import vue from '@vitejs/plugin-vue';
+import autoprefixer from 'autoprefixer';
+import pxtorem from 'postcss-pxtorem';
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   resolve: {
@@ -27,7 +25,7 @@ export default defineConfig({
       ]
     }
   },
-  // base: './', // 打包路径
+  base: './', // 打包路径
   server: {
     port: 8090,
     open: false,

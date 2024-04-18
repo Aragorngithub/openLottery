@@ -10,6 +10,7 @@ let timer;
 const router = useRouter();
 const updateCountdown = ref(false); // 唯一键用来强制更新元素，更新倒计时
 const isHiddenSkeleton = ref(false); // 是否隐藏骨架屏
+
 const props = defineProps({
   dataSource: {
     type: Object,
@@ -20,12 +21,14 @@ const props = defineProps({
     default: 0,
   },
 });
+
 onMounted(() => {
   // 定时强制更新元素，更新倒计时
   timer = setInterval(() => {
     updateCountdown.value = !updateCountdown.value;
   }, 1000);
 });
+
 /**
  * @description: 跳转至开奖历史
  * @param {*} lotCode 彩种编码
@@ -37,11 +40,13 @@ const goLotteryHistory = ({ lotCode }) => {
     query: { lotCode },
   });
 };
+
 watchEffect(() => {
   /** @description: 监听如果第一个国家的开奖结果完成请求则隐蔽骨架屏，显示开奖结果 */
   const firstCountry = Object.keys(props.dataSource)[0];
   isHiddenSkeleton.value ||= props.dataSource[firstCountry]?.[0].preDrawCode;
 });
+
 onUnmounted(() => {
   clearInterval(timer); // 清除倒计时
   timer = null;
@@ -64,7 +69,7 @@ onUnmounted(() => {
       class="rightsite-cardbox"
     >
       <p class="rightsite-cardbox--title">
-        <img v-lazyload="`src/assets/images/Flag_${country}.png`" alt="Flag" />
+        <img v-lazyload="`images/Flag_${country}.png`" alt="Flag" />
         {{ $t(country) }}
       </p>
       <div class="rightsite-cardbox--main">
@@ -73,7 +78,7 @@ onUnmounted(() => {
             <div class="card-toppart--left">
               <img
                 class="lot-image"
-                :src="`src/assets/images/${obj.code}.png`"
+                :src="`images/${obj.code}.png`"
                 alt="Lottery's logo"
               />
               <span>
@@ -115,7 +120,7 @@ onUnmounted(() => {
             </button>
           </p>
         </div>
-        <el-empty v-if="!data.length" />
+        <el-empty v-if="!data.length" :description="$t('noData')"/>
       </div>
       <br />
       <br />

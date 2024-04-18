@@ -13,6 +13,7 @@ const props = defineProps({
     require: true,
   }, // 数据源
 });
+
 watchEffect(() => {
   isHiddenSkeleton.value = 0 in Object.keys(props.dataSource); // 已得到数据源，隐藏骨架屏
 });
@@ -35,7 +36,7 @@ watchEffect(() => {
       <!-- 国旗与国家名称 -->
       <p class="card-box--title">
         <img
-          v-lazyload="`src/assets/images/Flag_${country}.png`"
+          v-lazyload="`images/Flag_${country}.png`"
           alt="Flag"
         />{{ $t(country) }}
       </p>
@@ -43,7 +44,7 @@ watchEffect(() => {
         <div class="card" v-for="(obj, idx) in data" :key="idx">
           <img
             class="lot-image"
-            :src="`src/assets/images/${obj.code}.png`"
+            :src="`images/${obj.code}.png`"
             alt="Lottery's logo"
           />
           <div class="card-rightsite">
@@ -70,7 +71,7 @@ watchEffect(() => {
             </div>
           </div>
         </div>
-        <el-empty v-if="!data.length" />
+        <el-empty v-if="!data.length" :description="$t('noData')"/>
       </div>
       <br /><br />
     </div>

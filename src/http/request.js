@@ -1,11 +1,10 @@
 import axios from 'axios';
-// import { Notification } from 'element-plus';
-
+import { ElNotification } from 'element-plus';
 const axiosInstance = axios.create({
   headers: { 'X-Requested-With': 'XMLHttpRequest' }, //设置post请求头
   withCredentials: true, //是否携带cookie信息
   timeout: 10000, //超时时间
-  retry: 2, //全局重试请求次数
+  retry: 1, //全局重试请求次数
   retryDelay: 1500, //全局请求间隔
 });
 
@@ -26,8 +25,13 @@ let reconnection = (error) => {
   // 如果当前发送的请求大于等于设置好的请求次数时，不再发送请求，返回最终的错误信息
   if (config._retryCount >= config.retry) {
     let { message } = error;
-    Notification.error({ title: 'ERROR!', message }); // todo: 请求错误
-  }
+    ElNotification({
+      type: 'error',
+      title: 'Error',
+      message
+    });
+    return
+  };
   config._retryCount += 1; // 记录请求次数+1
   // 设置请求间隔 在发送下一次请求之前停留一段时间，时间为上方设置好的请求间隔时间
   let reload = new Promise((resolve) => {
@@ -44,7 +48,7 @@ let reconnection = (error) => {
 export default function request ({ api, type, params}) {
   return new Promise((resolve, reject) => {
     axiosInstance[type](api, { params }).then(response => {
-      response.status == 200 && resolve(response.data);
+      response && response.status == 200 && resolve(response.data);
     }).catch(error => reject(error));
   });
 };

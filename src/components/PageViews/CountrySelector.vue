@@ -17,9 +17,11 @@ const $t = internalInstance.appContext.config.globalProperties.$t;
 const route = useRoute();
 const { commonData } = useCommonDataStore();
 const emit = defineEmits(['onSelectCountry']);
+
 const countryOptionsList = computed(
   () => commonData.country?.map((each) => each.englishName) ?? []
 ); // 定义国家选项
+
 const props = defineProps({
   isActive: {
     type: String,
@@ -27,6 +29,7 @@ const props = defineProps({
     default: '',
   }, // 被选中的国家
 });
+
 /** @description: 折叠/展开国家选项*/
 const toAppend = () => {
   isAppending.value = !isAppending.value;
@@ -40,6 +43,7 @@ const onSelectCountry = (country) => {
   country == props.isActive && (country = undefined);
   emit('onSelectCountry', country);
 };
+
 /** @description: 侦听路由跳转到流行彩票时禁止选择国家分类，跳转到世界彩票时隐藏国家选择*/
 watch(
   () => route.params,
@@ -66,7 +70,7 @@ watch(
       :class="{ active: props.isActive == country }"
       v-on:[publicState.deviceEvent]="onSelectCountry(country)"
     >
-      <img :src="`src/assets/images/Flag_${country}.png`" alt="National flag" />
+      <img :src="`images/Flag_${country}.png`" alt="National flag" />
       <p>{{ $t(country) }}</p>
     </li>
     <li>
