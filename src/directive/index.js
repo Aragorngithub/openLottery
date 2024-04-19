@@ -11,19 +11,19 @@ export default {
      * @param {*} binding 被绑定的图片路径
      */
     mounted: function (el, binding) {
-      const { value } = binding; // 当前img元素该渲染图片路径
+      const { value } = binding // 当前img元素该渲染图片路径
+      // 创建 IntersectionObserver 观察者
       const observer = new IntersectionObserver((entries) => {
-        // 创建 IntersectionObserver 观察者
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             // 观察到元素已进入视口，进行加载图片
-            const { target } = entry;
-            target.src = value;
-            observer.unobserve(target); // 停止观察
-          };
-        });
-      });
-      observer.observe(el); // 开始观察元素
-    },
+            const { target } = entry
+            target.src = value
+            observer.unobserve(target) // 停止观察
+          }
+        })
+      })
+      observer.observe(el) // 开始观察元素
+    }
   }
-};
+}

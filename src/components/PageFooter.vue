@@ -3,24 +3,24 @@
   * @Description: 页脚
 -->
 <script setup>
-import { scrollToTop } from '@/utils';
-import { ref, onMounted, onUnmounted } from 'vue';
-import { DArrowLeft } from '@element-plus/icons-vue';
+import { scrollToTop } from '@/utils'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { DArrowLeft } from '@element-plus/icons-vue'
 
-const isShowing = ref(false);
+const isShowing = ref(false)
 
 onMounted(() => {
-  window.addEventListener('scroll', watchScrollbarPosition);
-});
+  window.addEventListener('scroll', watchScrollbarPosition)
+})
 
 /** @description: 位置离顶部大于400则显示重置滚动位置的按钮 */
 const watchScrollbarPosition = () => {
-  isShowing.value = document.documentElement.scrollTop > 400;
-};
+  isShowing.value = document.documentElement.scrollTop > 400
+}
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', watchScrollbarPosition);
-});
+  window.removeEventListener('scroll', watchScrollbarPosition)
+})
 </script>
 
 <template>

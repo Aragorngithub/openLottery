@@ -1,8 +1,8 @@
-import vue from '@vitejs/plugin-vue';
-import autoprefixer from 'autoprefixer';
-import pxtorem from 'postcss-pxtorem';
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
+import vue from '@vitejs/plugin-vue'
+import autoprefixer from 'autoprefixer'
+import pxtorem from 'postcss-pxtorem'
+import { defineConfig } from 'vite'
+import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [vue()],
@@ -33,7 +33,7 @@ export default defineConfig({
       '/api': {
         target: 'https://nglottery.yb876.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
   }

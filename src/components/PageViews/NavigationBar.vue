@@ -3,46 +3,45 @@
   * @Description: 首页导航栏
 -->
 <script setup>
-import { watch, ref } from 'vue';
-import { getPopularLotteries } from '@/http';
-import { useRoute, useRouter } from 'vue-router';
-import { ArrowDown } from '@element-plus/icons-vue';
+import { watch, ref } from 'vue'
+import { getPopularLotteries } from '@/api'
+import { useRoute, useRouter } from 'vue-router'
+import { ArrowDown } from '@element-plus/icons-vue'
 
-const route = useRoute();
-const router = useRouter();
-const popularLotList = ref([]); // 流行彩种选项
-const isActiveTab = ref('lottery'); // 激活高亮的菜单项
-const isRotating = ref(false); // 流行彩票的箭头是否旋转
-const isActivePopularLot = ref(0); // 激活高亮的彩种选项
-const navOptionsList = [
-  'lottery',
-  'popular-lottery',
-  'world-lottery',
-  'jackpots',
-]; // 菜单项的列表
+const route = useRoute()
+const router = useRouter()
+const isRotating = ref(false) // 流行彩票的箭头是否旋转
+const popularLotList = ref([]) // 流行彩种选项
+const isActivePopularLot = ref(0) // 激活高亮的彩种选项
+const isActiveTab = ref('lottery') // 激活高亮的菜单项
+const navOptionsList = ['lottery', 'popular-lottery', 'world-lottery', 'jackpots'] // 菜单项的列表
 
 /**@description: 初始化流行彩票下拉列表*/
 getPopularLotteries().then(
-  ({ popularList }) => (popularLotList.value = popularList)
-);
+  ({ popularList }) =>
+    (popularLotList.value = popularList.map(({ code, name }) => ({
+      code,
+      name
+    })))
+)
 /**
  * @description:  导航栏切换
  * @param {*} page 组件名
  */
 const changeTab = (page) => {
-  router.push({ params: { page } });
-};
+  router.push({ params: { page } })
+}
 /**
  * @description: 跳转至流行彩票页面
  * @param {*} lotCode 彩种编号
  */
 const changeLotteryType = (lotCode) => {
-  isActivePopularLot.value = lotCode;
+  isActivePopularLot.value = lotCode
   router.push({
     params: { page: 'popular-lottery' },
-    query: { lotCode },
-  });
-};
+    query: { lotCode }
+  })
+}
 
 /**
  * @description: 高亮导航栏的点击项
@@ -51,9 +50,9 @@ const changeLotteryType = (lotCode) => {
 watch(
   () => route.params,
   ({ page }) => {
-    isActiveTab.value = page;
+    isActiveTab.value = page
   }
-);
+)
 </script>
 
 <template>
@@ -74,12 +73,12 @@ watch(
       >
         <ul class="dropdown-selector">
           <li
-            v-for="lottery in popularLotList"
-            :key="lottery.code"
-            :class="{ active: isActivePopularLot === lottery.code }"
-            v-on:[publicState.deviceEvent]="changeLotteryType(lottery.code)"
+            v-for="{ name, code } in popularLotList"
+            :key="code"
+            :class="{ active: isActivePopularLot === code }"
+            v-on:[publicState.deviceEvent]="changeLotteryType(code)"
           >
-            {{ lottery.code == 'YNLHC' ? $t(lottery.code) : lottery.name }}
+            {{ code == 'YNLHC' ? $t(code) : name }}
           </li>
         </ul>
         <template #reference>
@@ -94,7 +93,7 @@ watch(
               :class="[
                 'el-icon',
                 'el-icon-arrow-down',
-                isRotating ? 'rotation' : '',
+                isRotating ? 'rotation' : ''
               ]"
             >
               <ArrowDown />

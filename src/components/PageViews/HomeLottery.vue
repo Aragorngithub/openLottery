@@ -2,55 +2,58 @@
   * @FilePath: \openLottery\src\views\components\Lottery.vue
   * @Description: 开奖结果卡片-->
 <script setup>
-import { calculateTime, scrollToTop } from '@/utils';
-import { ref, onMounted, onUnmounted, watchEffect } from 'vue';
-import { useRouter } from 'vue-router';
+import { calculateTime, scrollToTop } from '@/utils'
+import { ref, onMounted, onUnmounted, watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 
-let timer;
-const router = useRouter();
-const updateCountdown = ref(false); // 唯一键用来强制更新元素，更新倒计时
-const isHiddenSkeleton = ref(false); // 是否隐藏骨架屏
+let timer
+const router = useRouter()
+const updateCountdown = ref(false) // 唯一键用来强制更新元素，更新倒计时
+const isHiddenSkeleton = ref(false) // 是否隐藏骨架屏
 
 const props = defineProps({
   dataSource: {
     type: Object,
-    require: true,
+    require: true
   }, // 数据源
   scrollPosition: {
     type: Number,
-    default: 0,
-  },
-});
+    default: 0
+  }
+})
 
 onMounted(() => {
   // 定时强制更新元素，更新倒计时
   timer = setInterval(() => {
-    updateCountdown.value = !updateCountdown.value;
-  }, 1000);
-});
+    updateCountdown.value = !updateCountdown.value
+  }, 1000)
+})
 
 /**
  * @description: 跳转至开奖历史
  * @param {*} lotCode 彩种编码
  */
 const goLotteryHistory = ({ lotCode }) => {
-  scrollToTop(props.scrollPosition + 1, 'instant');
+  scrollToTop(props.scrollPosition + 1, 'instant')
   router.push({
     params: { page: 'popular-lottery' },
-    query: { lotCode },
-  });
-};
+    query: { lotCode }
+  })
+}
 
 watchEffect(() => {
   /** @description: 监听如果第一个国家的开奖结果完成请求则隐蔽骨架屏，显示开奖结果 */
-  const firstCountry = Object.keys(props.dataSource)[0];
-  isHiddenSkeleton.value ||= props.dataSource[firstCountry]?.[0].preDrawCode;
-});
+  const firstCountry = Object.keys(props.dataSource)[0]
+  isHiddenSkeleton.value ||= props.dataSource[firstCountry]?.[0].preDrawCode
+  console.log('🚀 ~ isHiddenSkeleton.value ||= props.dataSource[firstCountry]?.[0].preDrawCode:', isHiddenSkeleton.value ||= props.dataSource[firstCountry]?.[0].preDrawCode)
+  console.log('🚀 ~ isHiddenSkeleton.value ||= props.dataSource[firstCountry]:', isHiddenSkeleton.value ||= props.dataSource[firstCountry])
+  console.log('🚀 ~ props.dataSource:', props.dataSource)
+})
 
 onUnmounted(() => {
-  clearInterval(timer); // 清除倒计时
-  timer = null;
-});
+  clearInterval(timer) // 清除倒计时
+  timer = null
+})
 </script>
 
 <template>
@@ -115,12 +118,12 @@ onUnmounted(() => {
             }}</b>
           </div>
           <p class="card-bottompart">
-            <button v-on:[publicState.deviceEvent]="goLotteryHistory(obj)">
+            <button @click="goLotteryHistory(obj)">
               {{ $t('lotteryHistory') }}
             </button>
           </p>
         </div>
-        <el-empty v-if="!data.length" :description="$t('noData')"/>
+        <el-empty v-if="!data.length" :description="$t('noData')" />
       </div>
       <br />
       <br />

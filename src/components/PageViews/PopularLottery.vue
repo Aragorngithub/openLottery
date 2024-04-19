@@ -2,25 +2,25 @@
   * @FilePath: \openLottery\src\views\components\PopularLottery.vue
   * @Description: 流行彩票卡片-->
 <script setup>
-import { ref, onMounted, onUnmounted, watchEffect, computed } from 'vue';
-import { getOpenResult, getHistoryOpenResult } from '@/http';
-import { ArrowLeftBold } from '@element-plus/icons-vue';
-import { useRoute, useRouter } from 'vue-router';
-import { calculateTime } from '@/utils';
+import { ref, onMounted, onUnmounted, watchEffect, computed } from 'vue'
+import { getOpenResult, getHistoryOpenResult } from '@/api'
+import { ArrowLeftBold } from '@element-plus/icons-vue'
+import { useRoute, useRouter } from 'vue-router'
+import { calculateTime } from '@/utils'
 
-let timer;
-const route = useRoute();
-const router = useRouter();
-const dataSource = ref({});
-const nextDrawInfo = ref({});
-const updateCountdown = ref(false);
-const latestResult = computed(() => dataSource.value?.[0] ?? {}); // 计算最新开奖结果
+let timer
+const route = useRoute()
+const router = useRouter()
+const dataSource = ref({})
+const nextDrawInfo = ref({})
+const updateCountdown = ref(false)
+const latestResult = computed(() => dataSource.value?.[0] ?? {}) // 计算最新开奖结果
 
 onMounted(() => {
   timer = setInterval(() => {
-    updateCountdown.value = !updateCountdown.value;
-  }, 1000);
-});
+    updateCountdown.value = !updateCountdown.value
+  }, 1000)
+})
 
 /**
  * @description: 请求开奖信息，下期开奖信息
@@ -28,27 +28,29 @@ onMounted(() => {
  */
 const initData = (lotCode) => {
   getHistoryOpenResult({ lotCode }).then(({ result }) => {
-    result && (dataSource.value = Object.freeze(result));
-  });
+    result && (dataSource.value = Object.freeze(result))
+  })
   getOpenResult({ lotCode }).then(({ result }) => {
-    result && (nextDrawInfo.value = Object.freeze(result));
-  });
-};
+    result && (nextDrawInfo.value = Object.freeze(result))
+  })
+}
 /** @description: 跳回前页面 */
 const toTurnBack = () => {
-  router.go(-1);
-};
+  router.go(-1)
+}
 
 watchEffect(() => {
   /** @description: 流行彩票切换彩种时进行相对应地展示开奖数据 */
-  route.query.lotCode && initData(route.query.lotCode);
-  !route.query.lotCode && route.params.page === "popular-lottery" && router.push('/');
-});
+  route.query.lotCode && initData(route.query.lotCode)
+  !route.query.lotCode &&
+    route.params.page === 'popular-lottery' &&
+    router.push('/')
+})
 
 onUnmounted(() => {
-  clearInterval(timer); // 清除倒计时
-  timer = null;
-});
+  clearInterval(timer) // 清除倒计时
+  timer = null
+})
 </script>
 
 <template>

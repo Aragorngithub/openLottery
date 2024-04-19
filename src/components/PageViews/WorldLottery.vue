@@ -3,68 +3,68 @@
  * @Description: 世界彩票
 -->
 <script setup>
-import { scrollToTop } from '@/utils';
-import { useRouter } from 'vue-router';
-import { getWorldLotteries } from '@/http';
-import { ref, computed, getCurrentInstance } from 'vue';
+import { scrollToTop } from '@/utils'
+import { useRouter } from 'vue-router'
+import { getWorldLotteries } from '@/api'
+import { ref, computed, getCurrentInstance } from 'vue'
 
-const router = useRouter();
-const lotteryList = ref([]); // 各个区域的彩票列表
-const countriesGroup = ref([]); // 各个州的国家分组
-const internalInstance = getCurrentInstance();
-const $t = internalInstance.appContext.config.globalProperties.$t;
-const $message = internalInstance.appContext.config.globalProperties.$message;
+const router = useRouter()
+const lotteryList = ref([]) // 各个区域的彩票列表
+const countriesGroup = ref([]) // 各个州的国家分组
+const internalInstance = getCurrentInstance()
+const $t = internalInstance.appContext.config.globalProperties.$t
+const $message = internalInstance.appContext.config.globalProperties.$message
 const props = defineProps({
   scrollPosition: {
     type: Number,
-    default: 0,
-  },
-});
+    default: 0
+  }
+})
 
 /**
  * @description: 定义国家分组的系列
  * @return {Array} 国家列表
- */    
+ */
 const defineCountriesList = computed(() => {
-  let countryList = new Array();
-  countriesGroup.value.forEach(obj => {
-    obj.countryList.forEach(countries => {
-      countryList.push(countries.englishName);
-    });
-  });
-  return countryList;
-});
+  let countryList = new Array()
+  countriesGroup.value.forEach((obj) => {
+    obj.countryList.forEach((countries) => {
+      countryList.push(countries.englishName)
+    })
+  })
+  return countryList
+})
 
 /** @description: 初始化相关数据 */
 getWorldLotteries().then((res) => {
   if (res) {
-    lotteryList.value = res.lotteryList;
-    countriesGroup.value = res.worldArea;
-  };
-});
+    lotteryList.value = res.lotteryList
+    countriesGroup.value = res.worldArea
+  }
+})
 /**
  * @description: 定义元素的引入名称（去除下划线）
  * @param {String} name 区域名称
  * @return {String} 已去除下划线的区域名称
- */    
+ */
 const formatClassName = (name) => {
-  return name.replaceAll(' ', '_');
-};
+  return name.replaceAll(' ', '_')
+}
 /**
  * @description: 视图平滑地滚动到彩种
  * @param {*} className 元素的引入名
- */    
+ */
 const scrollIntoLottery = (className) => {
-  let el = document.querySelector(`.${formatClassName(className)}`);
+  let el = document.querySelector(`.${formatClassName(className)}`)
   if (el) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'center'});
-    setTimeout(() => el.classList.add('is-shaking'), 500);
-    setTimeout(() => el.classList.remove('is-shaking'), 3000);
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    setTimeout(() => el.classList.add('is-shaking'), 500)
+    setTimeout(() => el.classList.remove('is-shaking'), 3000)
   } else {
     // todo: 待翻译
-    $message.warning('该国家暂无彩种！');
-  };
-};
+    $message.warning('该国家暂无彩种！')
+  }
+}
 /**
  * @description: 跳转单个开奖记录
  * @param {*} lotCode 彩种编号
@@ -72,47 +72,79 @@ const scrollIntoLottery = (className) => {
 const goLotteryHistory = (lotCode) => {
   router.push({
     params: { page: 'popular-lottery' },
-    query: { lotCode },
-  });
-  scrollToTop(props.scrollPosition);
+    query: { lotCode }
+  })
+  scrollToTop(props.scrollPosition)
 }
 </script>
 
 <template>
   <div class="rightsite-container world-lottery">
-    <el-skeleton :rows="8" :class="{ 'is-hidden': lotteryList.length }" class="skeleton" animated />
+    <el-skeleton
+      :rows="8"
+      :class="{ 'is-hidden': lotteryList.length }"
+      class="skeleton"
+      animated
+    />
     <div class="card">
       <p class="lot-name card-title">{{ $t('multipleContinents') }}</p>
-      <br>
+      <br />
       <div class="card-content">
         <!-- 多个国家 -->
         <div class="card-content__percontent">
           <u>{{ $t('Mutiplenational') }}</u>
           <ul>
-            <li v-for="country in defineCountriesList" :key="country" v-on:[publicState.deviceEvent]="scrollIntoLottery(country)">{{ $t(country) }}</li>
+            <li
+              v-for="country in defineCountriesList"
+              :key="country"
+              v-on:[publicState.deviceEvent]="scrollIntoLottery(country)"
+            >
+              {{ $t(country) }}
+            </li>
           </ul>
         </div>
         <!-- 区域下的国家 -->
-        <div v-for="group in countriesGroup" :key="group.englishName" class="card-content__percontent">
+        <div
+          v-for="group in countriesGroup"
+          :key="group.englishName"
+          class="card-content__percontent"
+        >
           <b>{{ $t(group.englishName) }}</b>
           <ul>
-            <li v-for="country in group.countryList" :key="country.englishName" v-on:[publicState.deviceEvent]="scrollIntoLottery(country.englishName)">{{ $t(country.englishName) }}</li>
+            <li
+              v-for="country in group.countryList"
+              :key="country.englishName"
+              v-on:[publicState.deviceEvent]="
+                scrollIntoLottery(country.englishName)
+              "
+            >
+              {{ $t(country.englishName) }}
+            </li>
           </ul>
         </div>
       </div>
     </div>
-    <div v-for="area, index in lotteryList" :key="index" class="card">
+    <div v-for="(area, index) in lotteryList" :key="index" class="card">
       <p class="lot-name card-title">{{ $t(area.englishName) }}</p>
-      <br>
+      <br />
       <template v-for="country in area.countryList" :key="country.englishName">
-        <h3 :class="formatClassName(country.englishName)">{{ $t(country.englishName) }}</h3>
+        <h3 :class="formatClassName(country.englishName)">
+          {{ $t(country.englishName) }}
+        </h3>
         <div class="card-content">
-          <div v-for="lottery in country.lotteryList" :key="lottery.code"
+          <div
+            v-for="lottery in country.lotteryList"
+            :key="lottery.code"
             class="card-content__percontent card-content-image_name"
-            v-on:[publicState.deviceEvent]="goLotteryHistory(lottery.code)">
-            <img class="lot-image" :src="`images/${lottery.code}.png`" :alt="lottery.code" />
+            v-on:[publicState.deviceEvent]="goLotteryHistory(lottery.code)"
+          >
+            <img
+              class="lot-image"
+              :src="`images/${lottery.code}.png`"
+              :alt="lottery.code"
+            />
             <span class="text-bigsize">
-              {{ lottery.code == "YNLHC" ? $t("YNLHC") : lottery.name }}
+              {{ lottery.code == 'YNLHC' ? $t('YNLHC') : lottery.name }}
             </span>
           </div>
         </div>

@@ -1,13 +1,10 @@
 import axios from 'axios';
 import { ElNotification } from 'element-plus';
 const axiosInstance = axios.create({
-  headers: { 'X-Requested-With': 'XMLHttpRequest' }, //设置post请求头
-  withCredentials: true, //是否携带cookie信息
   timeout: 10000, //超时时间
   retry: 1, //全局重试请求次数
-  retryDelay: 1500, //全局请求间隔
+  retryDelay: 2000, //全局请求间隔
 });
-
 // axios 响应拦截
 axiosInstance.interceptors.response.use(
   (response) => response,

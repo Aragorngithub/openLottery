@@ -3,20 +3,20 @@
   * @Description: 各个头奖卡片
 -->
 <script setup>
-import { ref, watchEffect } from 'vue';
-import { Top, Bottom } from '@element-plus/icons-vue';
+import { ref, watchEffect } from 'vue'
+import { Top, Bottom } from '@element-plus/icons-vue'
 
-const isHiddenSkeleton = ref(false); // 是否隐藏骨架屏
+const isHiddenSkeleton = ref(false) // 是否隐藏骨架屏
 const props = defineProps({
   dataSource: {
     type: Object,
-    require: true,
-  }, // 数据源
-});
+    require: true
+  } // 数据源
+})
 
 watchEffect(() => {
-  isHiddenSkeleton.value = 0 in Object.keys(props.dataSource); // 已得到数据源，隐藏骨架屏
-});
+  isHiddenSkeleton.value = 0 in Object.keys(props.dataSource) // 已得到数据源，隐藏骨架屏
+})
 </script>
 
 <template>
@@ -35,10 +35,9 @@ watchEffect(() => {
     >
       <!-- 国旗与国家名称 -->
       <p class="card-box--title">
-        <img
-          v-lazyload="`images/Flag_${country}.png`"
-          alt="Flag"
-        />{{ $t(country) }}
+        <img v-lazyload="`images/Flag_${country}.png`" alt="Flag" />{{
+          $t(country)
+        }}
       </p>
       <div class="card-box--main">
         <div class="card" v-for="(obj, idx) in data" :key="idx">
@@ -71,7 +70,7 @@ watchEffect(() => {
             </div>
           </div>
         </div>
-        <el-empty v-if="!data.length" :description="$t('noData')"/>
+        <el-empty v-if="!data.length" :description="$t('noData')" />
       </div>
       <br /><br />
     </div>

@@ -3,56 +3,56 @@
   * @Description: 国家选择器的组件
 -->
 <script setup>
-import { useRoute } from 'vue-router';
-import { useCommonDataStore } from '@/store';
-import { ArrowDownBold, ArrowUpBold } from '@element-plus/icons-vue';
-import { ref, shallowRef, computed, watch, getCurrentInstance } from 'vue';
+import { useRoute } from 'vue-router'
+import { useCommonDataStore } from '@/store'
+import { ArrowDownBold, ArrowUpBold } from '@element-plus/icons-vue'
+import { ref, shallowRef, computed, watch, getCurrentInstance } from 'vue'
 
-const beHidden = ref(false); // 国家选择是否被隐藏
-const isAppending = ref(false); // 国家选项是否展开所有
-const beNotAllowed = ref(false); // 国家选择是否被禁用
-const component = shallowRef(ArrowDownBold);
-const internalInstance = getCurrentInstance();
-const $t = internalInstance.appContext.config.globalProperties.$t;
-const route = useRoute();
-const { commonData } = useCommonDataStore();
-const emit = defineEmits(['onSelectCountry']);
+const beHidden = ref(false) // 国家选择是否被隐藏
+const isAppending = ref(false) // 国家选项是否展开所有
+const beNotAllowed = ref(false) // 国家选择是否被禁用
+const component = shallowRef(ArrowDownBold)
+const internalInstance = getCurrentInstance()
+const $t = internalInstance.appContext.config.globalProperties.$t
+const route = useRoute()
+const { commonData } = useCommonDataStore()
+const emit = defineEmits(['onSelectCountry'])
 
 const countryOptionsList = computed(
   () => commonData.country?.map((each) => each.englishName) ?? []
-); // 定义国家选项
+) // 定义国家选项
 
 const props = defineProps({
   isActive: {
     type: String,
     required: true,
-    default: '',
-  }, // 被选中的国家
-});
+    default: ''
+  } // 被选中的国家
+})
 
 /** @description: 折叠/展开国家选项*/
 const toAppend = () => {
-  isAppending.value = !isAppending.value;
-  component.value = isAppending.value ? ArrowUpBold : ArrowDownBold;
-};
+  isAppending.value = !isAppending.value
+  component.value = isAppending.value ? ArrowUpBold : ArrowDownBold
+}
 /**
  * @description: 点击某个国家将值传到上级组件
  * @param {*} country 国家值
  */
 const onSelectCountry = (country) => {
-  country == props.isActive && (country = undefined);
-  emit('onSelectCountry', country);
-};
+  country == props.isActive && (country = undefined)
+  emit('onSelectCountry', country)
+}
 
 /** @description: 侦听路由跳转到流行彩票时禁止选择国家分类，跳转到世界彩票时隐藏国家选择*/
 watch(
   () => route.params,
   ({ page }) => {
-    WEBTITLE.innerHTML = `IYG | ${$t(page)}`;
-    beNotAllowed.value = page == 'popular-lottery';
-    beHidden.value = page == 'world-lottery';
+    WEBTITLE.innerHTML = `IYG | ${$t(page)}`
+    beNotAllowed.value = page == 'popular-lottery'
+    beHidden.value = page == 'world-lottery'
   }
-);
+)
 </script>
 
 <template>
@@ -61,7 +61,7 @@ watch(
       'is-hidden': beHidden,
       'country-selector': true,
       'not-allow': beNotAllowed,
-      'has-checked': props.isActive,
+      'has-checked': props.isActive
     }"
   >
     <li

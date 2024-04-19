@@ -3,83 +3,64 @@
  * @Description: 页眉
 -->
 <script setup>
-import { useLotNameListStore } from '@/store';
-import { defineOptionsList, emitter } from '@/utils';
-import { ref, computed, getCurrentInstance } from 'vue';
-import { Search, Tools, Sunny, MoreFilled, Moon } from '@element-plus/icons-vue';
+import { useLotNameListStore } from '@/store'
+import { defineOptionsList, emitter } from '@/utils'
+import { ref, computed, getCurrentInstance } from 'vue'
+import { Search, Tools, Sunny, MoreFilled, Moon } from '@element-plus/icons-vue'
 
-const header = ref();
-const searchValue = ref('');
-const theme = ref(undefined);
-const isMinimize = ref(true);
-const { lotNameList } = useLotNameListStore();
-const internalInstance = getCurrentInstance();
-const $t = internalInstance.appContext.config.globalProperties.$t;
-const i18n = internalInstance.appContext.config.globalProperties.$i18n;
-const $message = internalInstance.appContext.config.globalProperties.$message;
-const langOptions = defineOptionsList([
-  '中文',
-  'cn',
-  'English',
-  'en',
-  'Portuguese',
-  'br',
-  'Español',
-  'es',
-  'indonesio',
-  'id',
-  'हिंदी',
-  'in',
-  '日本語',
-  'ja',
-  'Bahasa Melayu',
-  'my',
-  'ภาษาไทย',
-  'th',
-  'Tiếng Việt',
-  'vi',
-]); // 定义语言选项列表
+const header = ref()
+const searchValue = ref('')
+const theme = ref(undefined)
+const isMinimize = ref(true)
+const { lotNameList } = useLotNameListStore()
+const internalInstance = getCurrentInstance()
+const $t = internalInstance.appContext.config.globalProperties.$t
+const i18n = internalInstance.appContext.config.globalProperties.$i18n
+const $message = internalInstance.appContext.config.globalProperties.$message
+const langOptions = defineOptionsList(['中文', 'cn', 'English', 'en', 'Portuguese',
+  'br', 'Español', 'es', 'indonesio', 'id', 'हिंदी', 'in', '日本語', 'ja', 'Bahasa Melayu', 'my',
+  'ภาษาไทย', 'th', 'Tiếng Việt', 'vi' ]); // 定义语言选项列表
 
 const locale = computed({
   get() {
-    return i18n.locale;
+    return i18n.locale
   },
   set(lang) {
-    i18n.locale = lang;
+    i18n.locale = lang
   }
-});
+})
 
 /**
  * @description: 切换皮肤
  * @param {*} themeName 主题名称
- */ 
+ */
 const toSwitchTheme = (themeName) => {
-  document.body.className = `theme-${themeName}`;
-  localStorage.setItem('currentTheme', themeName);
-  theme.value = themeName || 'default';
+  document.body.className = `theme-${themeName}`
+  localStorage.setItem('currentTheme', themeName)
+  theme.value = themeName || 'default'
   header.value?.click()
-};
+}
 /*** @description: 查询彩种的历史开奖结果*/
 const toSearch = () => {
-  isMinimize.value = !isMinimize.value;
-  searchValue.value && emitter.emit('searchEvent', searchValue.value);
-};
+  isMinimize.value = !isMinimize.value
+  searchValue.value && emitter.emit('searchEvent', searchValue.value)
+}
 /**
  * @description: 将语言存到本地从而刷新时仍然保持当前用户设置的语言
  * @param {*} lang 语言值
  * @param {*} isMobile 如是移动端则要手动关闭弹出框且切换语言
- */ 
+ */
 const changeLang = (lang, isMobile) => {
-  localStorage.setItem('currentLang', lang);
-  isMobile && ((locale.value = lang), header.value.click());
-  let el = document.querySelector('html');
-  el.lang = lang;
+  localStorage.setItem('currentLang', lang)
+  isMobile && ((locale.value = lang), header.value.click())
+  let el = document.querySelector('html')
+  el.lang = lang
   $message({
     message: $t('successText'),
-    type: 'success',
-  });
-};
-toSwitchTheme(localStorage.getItem('currentTheme') || 'default');
+    type: 'success'
+  })
+}
+toSwitchTheme(localStorage.getItem('currentTheme') || 'default')
 </script>
 
 <template>
@@ -122,10 +103,10 @@ toSwitchTheme(localStorage.getItem('currentTheme') || 'default');
         @change="changeLang"
       >
         <el-option
-          v-for="option in langOptions"
-          :key="option.value"
-          :label="option.label"
-          :value="option.value"
+          v-for="{ label, value } in langOptions"
+          :key="value"
+          :label="label"
+          :value="value"
         >
         </el-option>
       </el-select>
@@ -137,10 +118,7 @@ toSwitchTheme(localStorage.getItem('currentTheme') || 'default');
         </template>
         <div class="topright-popover">
           <template v-if="!publicState.isMobile">
-            <label
-              ><i class="iconfont icon-qiehuanpifu"></i
-              >{{ $t('switchTheme') }}</label
-            >
+            <i class="iconfont icon-qiehuanpifu"></i>{{ $t('switchTheme') }}
             <br /><br />
             <ul class="theme-switcher">
               <li
@@ -215,14 +193,12 @@ toSwitchTheme(localStorage.getItem('currentTheme') || 'default');
               </template>
               <ul class="lang-switcher">
                 <li
-                  v-for="option in langOptions"
-                  :key="option.value"
-                  :class="{ 'is-active': locale == option.value }"
-                  v-on:[publicState.deviceEvent]="
-                    changeLang(option.value, true)
-                  "
+                  v-for="{ label, value } in langOptions"
+                  :key="value"
+                  :class="{ 'is-active': locale == value }"
+                  v-on:[publicState.deviceEvent]="changeLang(value, true)"
                 >
-                  {{ option.label }}
+                  {{ label }}
                 </li>
               </ul>
             </el-collapse-item>

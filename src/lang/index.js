@@ -1,14 +1,14 @@
-import BR from './lang/BR';
-import CN from './lang/CN';
-import EN from './lang/EN';
-import ES from './lang/ES';
-import ID from './lang/ID';
-import IN from './lang/IN';
-import JA from './lang/JA';
-import MY from './lang/MY';
-import TH from './lang/TH';
-import VI from './lang/VI';
-import { createI18n } from 'vue-i18n';
+import BR from './lang/BR'
+import CN from './lang/CN'
+import EN from './lang/EN'
+import ES from './lang/ES'
+import ID from './lang/ID'
+import IN from './lang/IN'
+import JA from './lang/JA'
+import MY from './lang/MY'
+import TH from './lang/TH'
+import VI from './lang/VI'
+import { createI18n } from 'vue-i18n'
 
 const i18n = new createI18n({
   locale: localStorage.getItem('currentLang') || 'en', // 默认语言
@@ -24,7 +24,7 @@ const i18n = new createI18n({
     ja: JA, // 日本(日文)
     my: MY, // 马来(马来文)
     th: TH, // 泰国(泰文)
-    vi: VI, // 越南(越南文)
+    vi: VI // 越南(越南文)
   }
-});
-export default i18n;
+})
+export default i18n
