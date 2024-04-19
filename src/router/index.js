@@ -7,7 +7,7 @@ const routes = [
   },
   {
     path: '/:page',
-    component: () => import('../views/index.vue')
+    component: () => import('../views/PageViews.vue')
   }
 ]
 const history = createWebHashHistory()

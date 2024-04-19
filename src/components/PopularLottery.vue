@@ -6,6 +6,7 @@ import { ref, onMounted, onUnmounted, watchEffect, computed } from 'vue'
 import { getOpenResult, getHistoryOpenResult } from '@/api'
 import { ArrowLeftBold } from '@element-plus/icons-vue'
 import { useRoute, useRouter } from 'vue-router'
+import { ElButton } from 'element-plus'
 import { calculateTime } from '@/utils'
 
 let timer
@@ -107,7 +108,7 @@ onUnmounted(() => {
         >
       </div>
       <b class="history-bottom__text">
-        <img src="../../assets/images/gold-icon.png" alt="money icon" />&nbsp;{{
+        <img src="@/assets/images/gold-icon.png" alt="money icon" />&nbsp;{{
           latestResult.currency
         }}&nbsp;{{ latestResult.jackpots || '_ _ _ _ _' }}
       </b>

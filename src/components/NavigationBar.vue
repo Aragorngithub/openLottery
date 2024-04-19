@@ -7,6 +7,7 @@ import { watch, ref } from 'vue'
 import { getPopularLotteries } from '@/api'
 import { useRoute, useRouter } from 'vue-router'
 import { ArrowDown } from '@element-plus/icons-vue'
+import { ElIcon, ElPopover } from 'element-plus'
 
 const route = useRoute()
 const router = useRouter()

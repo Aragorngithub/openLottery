@@ -1,7 +1,7 @@
 <script setup>
-import PageHeader from './components/PageHeader.vue'
-import PageFooter from './components/PageFooter.vue'
-import PageViews from './views/index.vue'
+import PageHeader from './views/PageHeader.vue'
+import PageFooter from './views/PageFooter.vue'
+import PageViews from './views/PageViews.vue'
 
 ;(function flexible(window, document) {
   var docEl = document.documentElement

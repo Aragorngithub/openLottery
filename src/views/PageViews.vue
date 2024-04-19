@@ -12,9 +12,10 @@ import {
 import { emitter } from '@/utils'
 import { useRoute, useRouter } from 'vue-router'
 import { getLotteries, getOpenResult } from '@/api'
-import NavigationBar from '@/components/PageViews/NavigationBar.vue'
+import { ElCarousel, ElCarouselItem } from 'element-plus'
+import NavigationBar from '@/components/NavigationBar.vue'
+import CountrySelector from '@/components/CountrySelector.vue'
 import { useCommonDataStore, useLotNameListStore } from '@/store'
-import CountrySelector from '@/components/PageViews/CountrySelector.vue'
 
 let LOTTERYDATA = {} // 备份的开奖结果
 let initHeight = true
@@ -34,10 +35,10 @@ const $t = internalInstance.appContext.config.globalProperties.$t
 const globalProperties = internalInstance.appContext.config.globalProperties
 const $message = internalInstance.appContext.config.globalProperties.$message
 const componentList = new Map([
-  ['popular-lottery', defineAsyncComponent(() => import('@/components/PageViews/PopularLottery.vue'))],
-  ['world-lottery', defineAsyncComponent(() => import('@/components/PageViews/WorldLottery.vue'))],
-  ['jackpots', defineAsyncComponent(() => import('@/components/PageViews/JackpotsLottery.vue'))],
-  ['lottery', defineAsyncComponent(() => import('@/components/PageViews/HomeLottery.vue'))],
+  ['popular-lottery', defineAsyncComponent(() => import('@/components/PopularLottery.vue'))],
+  ['world-lottery', defineAsyncComponent(() => import('@/components/WorldLottery.vue'))],
+  ['jackpots', defineAsyncComponent(() => import('@/components/JackpotsLottery.vue'))],
+  ['lottery', defineAsyncComponent(() => import('@/components/HomeLottery.vue'))],
 ]);
 
 /** @description: 请求彩票数据（国家，彩种等相关信息）*/
